@@ -120,12 +120,13 @@ const ContactForm = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <p className="text-vs-yellow text-xs font-semibold uppercase tracking-widest mb-3">Fale conosco</p>
+          <p className="text-vs-yellow text-xs font-semibold uppercase tracking-widest mb-3">Pronto para começar?</p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">
-            Vamos criar algo <span className="text-gradient-cm">incrível?</span>
+            Sua Fachada <span className="text-gradient-cm">Merece Atenção</span>
           </h2>
           <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
-            Conte sua ideia e nossa equipe retorna com a melhor proposta para destacar sua marca com impacto visual.
+            Preencha os dados abaixo e nosso especialista retorna em até 2 horas com uma proposta personalizada.
+            Primeira análise é 100% gratuita.
           </p>
         </motion.div>
 
@@ -149,8 +150,8 @@ const ContactForm = () => {
               ) : (
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                   <div className="pb-2 border-b border-white/10">
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-vs-cyan font-black">Briefing rapido</p>
-                    <p className="text-gray-400 text-sm mt-2">Preencha os campos e envie sua solicitacao em menos de 1 minuto.</p>
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-vs-cyan font-black">⚡ Proposta Rápida</p>
+                    <p className="text-gray-400 text-sm mt-2">Preencha em menos de 1 minuto. Sem compromisso.</p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -159,21 +160,23 @@ const ContactForm = () => {
                       <input name="nome" value={form.nome} onChange={handleChange} required placeholder="Seu nome" className={inputClass} />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs text-gray-400 uppercase tracking-widest font-bold">E-mail *</label>
-                      <input name="email" type="email" value={form.email} onChange={handleChange} required placeholder="seu@email.com" className={inputClass} />
+                      <label className="text-xs text-gray-400 uppercase tracking-widest font-bold">WhatsApp *</label>
+                      <input name="telefone" value={form.telefone} onChange={handleChange} required placeholder="(81) 98934-4275" className={inputClass} />
                     </div>
                   </div>
+                  
                   <div className="space-y-2">
-                    <label className="text-xs text-gray-400 uppercase tracking-widest font-bold">Telefone / WhatsApp</label>
-                    <input name="telefone" value={form.telefone} onChange={handleChange} placeholder="(81) 98934-4275" className={inputClass} />
+                    <label className="text-xs text-gray-400 uppercase tracking-widest font-bold">E-mail *</label>
+                    <input name="email" type="email" value={form.email} onChange={handleChange} required placeholder="seu@email.com" className={inputClass} />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-xs text-gray-400 uppercase tracking-widest font-bold">Mensagem *</label>
-                    <textarea name="mensagem" value={form.mensagem} onChange={handleChange} required rows={5} placeholder="Descreva seu projeto ou solicite um orçamento..." className={`${inputClass} resize-none`} />
-                  </div>
+
                   <button type="submit" className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold text-white transition-all hover:scale-[1.02] active:scale-95 hover:brightness-110 shadow-[0_18px_40px_rgba(0,180,216,0.24)] bg-gradient-to-r from-[#00B4D8] to-[#E91E8C] border border-white/20 cursor-pointer text-base uppercase tracking-wider">
-                    <Send size={18} /> Enviar Mensagem
+                    <Send size={18} /> Receber Proposta Grátis
                   </button>
+
+                  <div className="text-center text-xs text-gray-500">
+                    ✓ Sem compromisso • ⏱️ Resposta em 2h • 🔒 Seus dados seguros
+                  </div>
                 </form>
               )}
             </div>

@@ -12,8 +12,7 @@ interface NavLink {
 const NAV_LINKS: NavLink[] = [
   { label: "Início", href: "#inicio" },
   { label: "Serviços", href: "#servicos" },
-  { label: "Portfólio", href: "#portfolio" },
-  { label: "Contato", href: "#contato" },
+  { label: "Portfolio", href: "#portfolio" },
 ];
 
 // ── Sub-componente: Logo ───────────────────────────────────────────────────
@@ -98,6 +97,20 @@ const Header = () => {
               </button>
             </li>
           ))}
+          
+          {/* CTA no Header */}
+          <li>
+            <button
+              onClick={() => navigate("#contato")}
+              className="px-6 py-2 rounded-lg font-bold text-white text-sm border-none cursor-pointer transition-all hover:scale-105 active:scale-95"
+              style={{
+                background: "linear-gradient(135deg, #00B4D8, #E91E8C)",
+                boxShadow: "0 4px 12px rgba(0,180,216,0.3)",
+              }}
+            >
+              Solicitar Orçamento
+            </button>
+          </li>
         </ul>
 
         {/* Botão Mobile */}

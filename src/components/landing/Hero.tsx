@@ -61,9 +61,9 @@ const Hero = () => {
 
       {/* ── Conteúdo principal ── */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center pt-24 pb-16">
-        {/* ── Logo animada no hero com efeito de scroll ── */}
+        {/* ── Logo animada no hero com efeito de scroll (REDUZIDA) ── */}
         <motion.div
-          className="flex flex-col items-center justify-center mb-6"
+          className="flex flex-col items-center justify-center mb-4"
           style={{
             scale: logoScale,
             opacity: logoOpacity,
@@ -71,13 +71,13 @@ const Hero = () => {
         >
           <img
             alt="logo-vs-comunicacao-visual"
-            className="h-24 md:h-32 w-auto cursor-pointer select-none"
+            className="h-16 md:h-20 w-auto cursor-pointer select-none"
             draggable="false"
             loading="eager"
             src="/logo.png"
           />
-          <p className="text-sm md:text-base font-light tracking-widest uppercase text-white mt-3 leading-tight">
-            Comunicação Visual
+          <p className="text-xs md:text-sm font-light tracking-widest uppercase text-white mt-2 leading-tight">
+            VS Comunicação Visual
           </p>
         </motion.div>
 
@@ -87,62 +87,76 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tight text-white mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-black leading-tight tracking-tight text-white mb-6"
         >
-          Sua Marca <span className="text-gradient-vs">Impõe Presença</span>{" "}
-          onde quer que esteja
+          Sua Loja Passa Desapercebida?
+          <span className="text-gradient-vs block mt-2">Dobramos Visitação com Fachadas que Vendem</span>
         </motion.h1>
 
-        {/* Subtítulo */}
+        {/* Subtítulo com problema/solução */}
         <motion.p
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
+          className="text-gray-300 text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed mb-8"
         >
-          Especialistas em Fachadas em ACM, Letra Caixa, Painéis Luminosos e
-          Projetos Especiais. Transformamos sua identidade visual em
-          experiências reais e impactantes.
+          Agências e lojas aumentam visitação em até <span className="font-bold text-vs-cyan">256%</span> com comunicação visual estratégica. 
+          Fachadas em ACM, Letras Iluminadas e Projetos Especiais que <span className="font-bold text-vs-magenta">geram leads e vendas reais</span>.
+          Do projeto à instalação em até 7 dias.
         </motion.p>
 
-        {/* Botões CTA */}
+        {/* 3 Benefícios principais */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="flex flex-col sm:flex-row gap-6 justify-center mb-10 flex-wrap"
         >
-          {/* CTA primário */}
-          <button
-            onClick={() => scrollTo("#portfolio")}
-            className="group flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-white text-base
-                       border-none cursor-pointer transition-all duration-300 hover:scale-105"
-            style={{
-              background: "linear-gradient(135deg, #0077d8, #d80065ff, #efff0aff)",
-              boxShadow: "0 0 30px rgba(209, 206, 53, 0.64)",
-            }}
-          >
-            Ver Projetos
-            <ArrowRight
-              size={18}
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </button>
+          <div className="flex items-center gap-3">
+            <span className="text-vs-cyan font-bold text-lg">✓</span>
+            <span className="text-white font-semibold">ROI em 3-4 meses</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-vs-cyan font-bold text-lg">✓</span>
+            <span className="text-white font-semibold">Instalação em 7 dias</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-vs-cyan font-bold text-lg">✓</span>
+            <span className="text-white font-semibold">Garantia 5 anos</span>
+          </div>
+        </motion.div>
 
-          {/* CTA secundário */}
+        {/* CTA ÚNICO - Análise Grátis */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.6, delay: 0.55 }}
+          className="flex flex-col items-center gap-4"
+        >
           <button
             onClick={() => scrollTo("#contato")}
-            className="px-8 py-4 rounded-xl font-semibold text-white text-base cursor-pointer
-                       transition-all duration-300 hover:scale-105 hover:bg-white/10"
+            className="group flex items-center gap-2 px-10 py-4 rounded-xl font-bold text-white text-base
+                       border-none cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95"
             style={{
-              background: "transparent",
-              border: "1px solid rgba(255,255,255,0.15)",
+              background: "linear-gradient(135deg, #00B4D8, #E91E8C)",
+              boxShadow: "0 8px 32px rgba(0, 180, 216, 0.4)",
             }}
           >
-            Solicitar Orçamento
+            🎯 Receber Análise Grátis
+            <ArrowRight
+              size={18}
+              className="transition-transform duration-300 group-hover:translate-x-2"
+            />
           </button>
+          
+          <div className="flex items-center gap-2 text-sm text-gray-400">
+            <span>✓ Sem compromisso</span>
+            <span>•</span>
+            <span>⏱️ Resposta em 2h</span>
+          </div>
         </motion.div>
 
         {/* Estatísticas */}

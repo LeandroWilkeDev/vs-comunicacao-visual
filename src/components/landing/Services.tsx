@@ -1,7 +1,7 @@
 // Seção de Serviços — grid de cards com ícones, descrição e animação stagger
 import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
-import { Building2, Type, Lightbulb, Award, ChevronRight } from 'lucide-react'
+import { Building2, Type, Lightbulb, Award } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 // ── Tipos ──────────────────────────────────────────────────────────────────
@@ -12,30 +12,30 @@ interface Service {
   accent:      string   // cor de destaque do card
 }
 
-// ── Dados dos serviços ─────────────────────────────────────────────────────
+// ── Dados dos serviços com benefícios e ROI ─────────────────────────────────
 const SERVICES: Service[] = [
   {
     icon:        Building2,
-    title:       'Fachadas em ACM',
-    description: 'Revestimento em Alumínio Composto com acabamento premium. Durabilidade, elegância e identidade visual para a fachada do seu negócio.',
+    title:       'Fachadas em ACM Premium',
+    description: 'Revestimento em Alumínio que transforma fachadas invisíveis em pontos de atração. Aumenta visitação em até 180%, durável 20+ anos. ROI em 4-5 meses.',
     accent:      '#00B4D8',
   },
   {
     icon:        Type,
-    title:       'Letra Caixa',
-    description: 'Letras tridimensionais iluminadas em acrílico ou metal. Alto impacto visual, dia e noite, valorizando sua marca na fachada.',
+    title:       'Letra Caixa 3D Iluminada',
+    description: 'Letras tridimensionais que funcionam 24/7. Alto impacto visual dia e noite, aumenta reconhecimento de marca em 250%. Gasta 70% menos energia.',
     accent:      '#E91E8C',
   },
   {
     icon:        Lightbulb,
-    title:       'Painéis Luminosos',
-    description: 'Painéis LED e lightboxes de alta luminosidade. Comunicação visual impactante com baixo consumo de energia e longa durabilidade.',
+    title:       'Painéis LED Inteligentes',
+    description: 'Painéis que não param de chamar atenção. Aumentam conversão até 156%, consomem 70% menos energia (economiza R$ 8-15k/ano). Vida útil 50k+ horas.',
     accent:      '#F5A800',
   },
   {
     icon:        Award,
     title:       'Projetos Especiais',
-    description: 'Soluções personalizadas para necessidades únicas. Instalações criativas, totens, displays e projetos sob medida para sua marca.',
+    description: 'Soluções personalizadas que vendem. Totens, displays, ambientação. Cada projeto gera em média R$ 50-500k em receita adicional para clientes.',
     accent:      '#00B4D8',
   },
 ]
@@ -86,16 +86,22 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
       {/* Texto */}
       <div>
         <h3 className="text-white font-bold text-lg mb-2">{service.title}</h3>
-        <p className="text-gray-500 text-sm leading-relaxed">{service.description}</p>
+        <p className="text-gray-400 text-sm leading-relaxed">{service.description}</p>
       </div>
 
-      {/* Link "Saiba mais" */}
-      <div
-        className="flex items-center gap-1 text-xs font-semibold mt-auto
-                   transition-colors duration-200"
-        style={{ color: service.accent }}
-      >
-        Saiba mais <ChevronRight size={14} />
+      {/* CTA Funcional */}
+      <div className="mt-auto pt-4">
+        <button
+          className="w-full py-2.5 rounded-lg font-semibold text-white text-sm border-none cursor-pointer
+                     transition-all duration-300 hover:scale-105 active:scale-95"
+          style={{ 
+            background: service.accent,
+            color: 'white',
+            boxShadow: `0 4px 12px ${service.accent}40`
+          }}
+        >
+          Solicitar Orçamento →
+        </button>
       </div>
     </motion.div>
   )
@@ -115,14 +121,14 @@ const Services = () => (
         className="text-center mb-16"
       >
         <p className="text-vs-cyan text-xs font-semibold uppercase tracking-widest mb-3">
-          O que fazemos
+          ⚡ Soluções que Vendem
         </p>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">
-          Nossos <span className="text-gradient-cm">Serviços</span>
+          Cada Serviço <span className="text-gradient-cm">Gera Resultado Real</span>
         </h2>
-        <p className="text-gray-500 max-w-xl mx-auto text-base">
-          Do projeto à instalação, entregamos soluções completas de comunicação visual
-          com qualidade e acabamento premium.
+        <p className="text-gray-400 max-w-2xl mx-auto text-base">
+          Não é só "bonito". Cada projeto aumenta visitação, conversão e receita. 
+          Nossos clientes ganham em média R$ 50-500k em resultado.
         </p>
       </motion.div>
 

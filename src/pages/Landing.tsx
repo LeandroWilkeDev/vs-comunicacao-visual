@@ -1,8 +1,13 @@
 // Página principal — monta todas as seções da landing page VS Comunicação Visual
 import Header      from '../components/landing/Header'
 import Hero        from '../components/landing/Hero'
+import LeadMagnet  from '../components/landing/LeadMagnet'
+import Testimonials from '../components/landing/Testimonials'
 import Services    from '../components/landing/Services'
+import CaseStudies from '../components/landing/CaseStudies'
 import Portfolio   from '../components/landing/Portfolio'
+import FAQ         from '../components/landing/FAQ'
+import UrgencyBanner from '../components/landing/UrgencyBanner'
 import ContactForm from '../components/landing/ContactForm'
 import Footer      from '../components/landing/Footer'
 import { motion } from 'framer-motion'
@@ -49,17 +54,42 @@ const Landing = () => (
       <Hero />
     </section>
 
-    {/* Grid de serviços */}
+    {/* Lead Magnet — Captura de E-mail */}
+    <section>
+      <LeadMagnet />
+    </section>
+
+    {/* Prova Social — Depoimentos reais */}
+    <section>
+      <Testimonials />
+    </section>
+
+    {/* Serviços — Com benefício */}
     <section id="servicos">
       <Services />
     </section>
 
-    {/* Galeria do portfólio */}
+    {/* Case Studies — ROI Real */}
+    <section>
+      <CaseStudies />
+    </section>
+
+    {/* Portfolio — Galeria de projetos */}
     <section id="portfolio">
       <Portfolio />
     </section>
 
-    {/* Formulário de contato */}
+    {/* FAQ — Responder objeções */}
+    <section>
+      <FAQ />
+    </section>
+
+    {/* Urgência — Oferta limitada */}
+    <section>
+      <UrgencyBanner />
+    </section>
+
+    {/* Contato — Formulário */}
     <section id="contato">
       <ContactForm />
     </section>
