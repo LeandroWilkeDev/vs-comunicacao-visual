@@ -81,6 +81,7 @@ const SOCIAL_LINKS = [
 
 const inputClass =
   "w-full bg-[#121212] border border-white/10 rounded-xl px-4 py-3.5 text-white text-sm " +
+  "sm:text-sm text-[16px] " +
   "placeholder:text-gray-600 outline-none transition-all duration-300 " +
   "focus:border-vs-cyan/70 focus:bg-[#151515] focus:shadow-[0_0_0_4px_rgba(0,180,216,0.12)]";
 
@@ -190,16 +191,16 @@ const ContactForm = () => {
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 text-vs-cyan bg-vs-cyan/10 group-hover:bg-vs-cyan group-hover:text-white transition-colors duration-300">
                   {icon}
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-gray-500 text-[10px] uppercase tracking-[0.15em] font-black mb-1">{label}</p>
                   {href ? (
-                    <a href={href} target="_blank" rel="noopener noreferrer" className="text-white text-sm font-semibold hover:text-vs-cyan transition-colors">
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="block text-white text-sm font-semibold break-words hover:text-vs-cyan transition-colors">
                       {value}
                     </a>
                   ) : (
-                    <p className="text-white text-sm font-semibold">{value}</p>
+                    <p className="text-white text-sm font-semibold break-words">{value}</p>
                   )}
-                  {subValue && <p className="text-vs-cyan/70 text-xs mt-1.5 font-medium">{subValue}</p>}
+                  {subValue && <p className="text-vs-cyan/70 text-xs mt-1.5 font-medium break-words">{subValue}</p>}
                 </div>
               </div>
             ))}

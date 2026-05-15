@@ -58,7 +58,7 @@ const Footer = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-14"
         >
 
           {/* Coluna 1 — Navegação */}
