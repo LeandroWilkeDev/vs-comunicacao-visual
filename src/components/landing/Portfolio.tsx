@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import { ZoomIn, X } from 'lucide-react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 // ── Tipos ──────────────────────────────────────────────────────────────────
 interface PortfolioItem {
@@ -20,6 +23,17 @@ const ITEMS: PortfolioItem[] = [
   { id: 5, img: '/acmRes.jpg', title: 'Fachada Residencial ACM', category: 'Fachadas em ACM', accent: '#E91E8C' },
   { id: 6, img: '/letreiro3d.jpg', title: 'Letreiro 3D Premium', category: 'Letra Caixa', accent: '#F5A800' },
 ]
+
+const videos = ['/video1.mp4', '/video2.mp4', '/video3.mp4']
+const VIDEO_OFFSET_X = 220
+const SIDE_SCALE = 0.85
+const SIDE_BLUR = 6
+
+gsap.registerPlugin(useGSAP, ScrollTrigger)
+
+function getLoopedIndex(index: number, total: number) {
+  return (index + total) % total
+}
 
 // ── Variantes de animação ──────────────────────────────────────────────────
 const container: Variants = {
@@ -77,6 +91,229 @@ const PortfolioCard = ({ item, onOpen }: { item: PortfolioItem; onOpen: (item: P
   )
 }
 
+const VideoCarousel = () => {
+  const container = useRef<HTMLDivElement>(null)
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [volumeIndex, setVolumeIndex] = useState(0)
+  const VOLUME_LEVELS = [0, 0.25, 1]
+  const [isInView, setIsInView] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const { contextSafe } = useGSAP({ scope: container })
+
+  const updatePositions = contextSafe((index: number) => {
+    const total = videos.length
+
+    videos.forEach((_, i) => {
+      const el = container.current?.querySelectorAll('.video-slide')[i] as HTMLDivElement | undefined
+      if (!el) return
+
+      let diff = i - index
+      if (diff > Math.floor(total / 2)) diff -= total
+      if (diff < -Math.floor(total / 2)) diff += total
+
+      const isCenter = diff === 0
+      const xOffset = diff * VIDEO_OFFSET_X
+      const scale = isCenter ? 1 : SIDE_SCALE
+      const opacity = Math.abs(diff) > 2 ? 0 : isCenter ? 1 : 0.6
+      const blur = isCenter ? 0 : SIDE_BLUR
+      const zIndex = 30 - Math.abs(diff)
+
+      gsap.to(el, {
+        x: xOffset,
+        scale,
+        opacity,
+        zIndex,
+        filter: `blur(${blur}px)`,
+        duration: 0.6,
+        ease: 'power3.out',
+      })
+    })
+  })
+
+  useEffect(() => {
+    let intervalId: number | undefined
+
+    if (!isPlaying) {
+      intervalId = window.setInterval(() => {
+        setActiveIndex((current) => getLoopedIndex(current + 1, videos.length))
+      }, 5000)
+    }
+
+    return () => {
+      if (intervalId) window.clearInterval(intervalId)
+    }
+  }, [isPlaying])
+
+  useEffect(() => {
+    updatePositions(activeIndex)
+  }, [activeIndex, updatePositions])
+
+  useGSAP(
+    () => {
+      ScrollTrigger.create({
+        trigger: container.current,
+        start: 'top 75%',
+        end: 'bottom 35%',
+        onEnter: () => setIsInView(true),
+        onLeave: () => setIsInView(false),
+        onEnterBack: () => setIsInView(true),
+        onLeaveBack: () => setIsInView(false),
+      })
+    },
+    { scope: container },
+  )
+
+  useEffect(() => {
+    const currentVolume = VOLUME_LEVELS[volumeIndex]
+    videos.forEach((_, i) => {
+      const videoEl = videoRefs.current[i]
+      if (!videoEl) return
+
+      // apply volume and muted flag
+      videoEl.volume = currentVolume
+      videoEl.muted = currentVolume === 0
+
+      if (i === activeIndex) {
+        if (isInView && isPlaying) {
+          videoEl.play().catch(() => {})
+        } else {
+          videoEl.pause()
+        }
+      } else {
+        videoEl.pause()
+        videoEl.currentTime = 0
+      }
+    })
+  }, [activeIndex, isInView, isPlaying, volumeIndex])
+
+  const handleInitialPlay = () => {
+    setIsPlaying(true)
+  }
+
+  const nextSlide = () => setActiveIndex((prev) => getLoopedIndex(prev + 1, videos.length))
+  const prevSlide = () => setActiveIndex((prev) => getLoopedIndex(prev - 1, videos.length))
+
+  const cycleVolume = () => setVolumeIndex((v) => (v + 1) % VOLUME_LEVELS.length)
+
+  return (
+    <article className="reveal relative w-full mt-0 sm:mt-3 mb-10 transition-all flex flex-col items-center pt-10 sm:pt-6 pb-8 sm:py-8">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-1/2 top-0 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-[#00B4D8]/14 blur-3xl" />
+        <div className="absolute right-[12%] top-24 h-64 w-64 rounded-full bg-[#E91E8C]/10 blur-3xl" />
+      </div>
+
+   
+
+      <div
+        ref={container}
+        className="relative z-10 w-full h-[58dvh] lg:h-[34rem] flex justify-center items-center overflow-hidden"
+      >
+        
+        
+
+        {videos.map((vid, i) => (
+          <div
+            key={i}
+            className="video-slide absolute w-[260px] sm:w-[300px] aspect-[9/16] rounded-[2.5rem] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.8)] border border-white/20 bg-zinc-950 will-change-transform cursor-pointer"
+            onClick={() => setActiveIndex(i)}
+          >
+              <video
+              ref={(el) => {
+                videoRefs.current[i] = el
+              }}
+              src={vid}
+              loop
+              muted={VOLUME_LEVELS[volumeIndex] === 0}
+              playsInline
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-zinc-950/90 via-transparent to-transparent pointer-events-none" />
+          </div>
+        ))}
+
+        {!isPlaying && (
+          <div className="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
+            <button
+              onClick={handleInitialPlay}
+              aria-label="Iniciar Vídeo com Som"
+              className="pointer-events-auto h-20 w-20 rounded-full bg-gradient-to-br from-[#E91E8C] to-[#F5A800] backdrop-blur-md border border-white/20 flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95 shadow-[0_10px_40px_rgba(233,30,140,0.18)] animate-pulse"
+            >
+              <svg className="w-10 h-10 ml-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          </div>
+        )}
+
+        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-2 sm:px-[15%] z-50 pointer-events-none">
+          <button
+            onClick={prevSlide}
+            aria-label="Vídeo anterior"
+            className="pointer-events-auto h-12 w-12 rounded-full bg-black/50 backdrop-blur hover:bg-black/70 border border-white/10 flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95 shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <button
+            onClick={nextSlide}
+            aria-label="Próximo vídeo"
+            className="pointer-events-auto h-12 w-12 rounded-full bg-black/50 backdrop-blur hover:bg-black/70 border border-white/10 flex items-center justify-center text-white transition-all hover:scale-110 active:scale-95 shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="absolute bottom-[10%] right-[15%] z-50 pointer-events-none">
+          <button
+            onClick={cycleVolume}
+            className={`pointer-events-auto h-12 w-12 rounded-full backdrop-blur-md flex items-center justify-center text-white transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(0,180,216,0.22)] border border-white/10 ${
+              volumeIndex === 0
+                ? 'bg-white/6 border-white/12'
+                : volumeIndex === 1
+                ? 'bg-[#00B4D8]/90'
+                : 'bg-gradient-to-br from-[#00B4D8] to-[#E91E8C]'
+            }`}
+            aria-label={volumeIndex === 0 ? 'Ativar som' : volumeIndex === 1 ? 'Volume baixo' : 'Volume normal'}
+          >
+            {volumeIndex === 0 ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+              </svg>
+            ) : (
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072"/>
+              </svg>
+            )}
+          </button>
+        </div>
+
+        <div className="absolute bottom-2 inset-x-0 flex justify-center gap-2 z-50 pointer-events-none">
+          {videos.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveIndex(idx)}
+              aria-label={`Ir para o vídeo ${idx + 1}`}
+              className={`h-2.5 rounded-full transition-all duration-300 pointer-events-auto ${
+                idx === activeIndex
+                  ? 'w-8 bg-gradient-to-r from-[#00B4D8] to-[#E91E8C] shadow-[0_6px_18px_rgba(0,180,216,0.18)]'
+                  : 'w-2.5 bg-white/40 hover:bg-white/70'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </article>
+  )
+}
+
 // ── Componente principal com Modal ───────────────────────────────────────────
 const Portfolio = () => {
   const [selectedImg, setSelectedImg] = useState<PortfolioItem | null>(null)
@@ -105,6 +342,9 @@ const Portfolio = () => {
             Cada projeto é único. Conheça alguns dos trabalhos que entregamos com excelência.
           </p>
         </motion.div>
+
+        {/* Carrossel de vídeos */}
+        <VideoCarousel />
 
         {/* Grid */}
         <motion.div

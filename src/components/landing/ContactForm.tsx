@@ -58,7 +58,7 @@ const CONTACT_INFO: ContactInfo[] = [
 const SOCIAL_LINKS = [
   {
     icon: <FaInstagram size={18} />,
-    href: "https://instagram.com",
+    href: "https://www.instagram.com/vs.cvoficial?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     label: "Instagram",
     className:
       "hover:border-[#E1306C] hover:text-[#E1306C] hover:shadow-[0_0_24px_rgba(225,48,108,0.35)]",

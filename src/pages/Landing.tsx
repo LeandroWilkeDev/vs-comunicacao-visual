@@ -26,7 +26,7 @@ const FloatingWhatsAppButton = () => (
     <span className="absolute inset-0 rounded-full bg-[#25D366]/30 blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
     <span className="absolute inset-0 rounded-full animate-ping bg-[#25D366]/25" />
 
-    <span className="relative flex items-center gap-3 rounded-full border border-white/15 bg-[linear-gradient(180deg,rgba(18,18,18,0.95),rgba(10,10,10,0.9))] px-4 py-3 pr-5 shadow-[0_18px_45px_rgba(0,0,0,0.45),0_0_0_1px_rgba(37,211,102,0.18)] backdrop-blur-md transition-all duration-300 group-hover:border-[#25D366]/40 group-hover:shadow-[0_18px_55px_rgba(0,0,0,0.5),0_0_30px_rgba(37,211,102,0.25)] sm:pl-4 sm:pr-6">
+    <span className="relative flex items-center gap-0 sm:gap-3 rounded-full border border-white/15 bg-[linear-gradient(180deg,rgba(18,18,18,0.95),rgba(10,10,10,0.9))] px-2 py-2 sm:px-4 sm:py-3 pr-2 sm:pr-6 shadow-[0_18px_45px_rgba(0,0,0,0.45),0_0_0_1px_rgba(37,211,102,0.18)] backdrop-blur-md transition-all duration-300 group-hover:border-[#25D366]/40 group-hover:shadow-[0_18px_55px_rgba(0,0,0,0.5),0_0_30px_rgba(37,211,102,0.25)]">
       <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] via-[#20b357] to-[#128C7E] text-white shadow-[0_10px_24px_rgba(37,211,102,0.35)] ring-1 ring-white/15 transition-transform duration-300 group-hover:scale-105">
         <FaWhatsapp size={21} />
       </span>
