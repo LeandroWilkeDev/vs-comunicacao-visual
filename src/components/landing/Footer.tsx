@@ -1,23 +1,6 @@
 // Rodapé — copyright, links de navegação, redes sociais e logo
 import { motion } from 'framer-motion'
 import { ArrowUp, MapPin, Phone, Mail } from 'lucide-react'
-// ── Logo reutilizável ─────────────────────────────────────────────────────
-const VSLogo = () => (
-  <div className="flex items-center gap-3 select-none">
-    <div
-      className="w-10 h-10 rounded-xl flex items-center justify-center font-black text-white text-sm tracking-tight"
-      style={{ background: 'linear-gradient(135deg, #00B4D8 0%, #E91E8C 60%, #F5A800 100%)' }}
-    >
-      VS
-    </div>
-    <div className="leading-none">
-      <p className="font-bold text-white text-sm m-0 tracking-wide">VS</p>
-      <p className="text-[9px] font-light tracking-[0.2em] uppercase text-vs-cyan m-0 opacity-80">
-        Comunicação Visual
-      </p>
-    </div>
-  </div>
-)
 
 // ── Dados ─────────────────────────────────────────────────────────────────
 const NAV = [
@@ -77,10 +60,8 @@ const Footer = () => {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14"
         >
-          {/* Coluna 1 — Brand */}
-          
 
-          {/* Coluna 2 — Navegação */}
+          {/* Coluna 1 — Navegação */}
           <div>
             <FooterHeading>Navegação</FooterHeading>
             <ul className="flex flex-col gap-2.5 list-none m-0 p-0">
@@ -104,7 +85,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Coluna 3 — Serviços */}
+          {/* Coluna 2 — Serviços */}
           <div>
             <FooterHeading>Serviços</FooterHeading>
             <ul className="flex flex-col gap-2.5 list-none m-0 p-0">
@@ -114,7 +95,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Coluna 4 — Contato */}
+          {/* Coluna 3 — Contato */}
           <div>
             <FooterHeading>Contato</FooterHeading>
             <ul className="flex flex-col gap-3.5 list-none m-0 p-0">
